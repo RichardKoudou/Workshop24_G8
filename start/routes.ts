@@ -10,6 +10,7 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 
 import AnimalController from '#controllers/animals_controller';
+const AppointmentsController = () => import('#controllers/appointments_controller')
 const UsersController = () => import('#controllers/users_controller')
 router.get('OPoil/v1/Home', async () => {}).use(middleware.auth({
   guards: ['api']}));
@@ -17,8 +18,14 @@ router.get('OPoil/v1/Home', async () => {}).use(middleware.auth({
 const AuthController = () => import('#controllers/auth_controller')
 
 router.get('/', async ({ view }) => {
-  return view.render('home')
+  return view.render('home/home')
 })
+
+router
+  .group(() => {
+    router.post('create', [AppointmentsController, 'create'])
+  })
+  .prefix('PilePoil/v1/appointments')
 
 router
   .group(() => {
