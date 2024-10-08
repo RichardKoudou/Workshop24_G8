@@ -6,4 +6,5 @@ export default class UsersController {
         const getAllUsers = await User.all()
         return response.json(getAllUsers)
     }
+
 }

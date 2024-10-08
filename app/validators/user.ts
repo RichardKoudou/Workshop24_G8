@@ -11,17 +11,24 @@ export const userValidator = vine.compile(
             return !user
         }),
         password: vine.string().minLength(6).maxLength(32),
-        first_name: vine.string().minLength(2).maxLength(32)
-            .unique(async (query, field) => {
+        first_name: vine
+        .string()
+        .minLength(2)
+        .maxLength(32)
+        .unique(async (query, field) => {
             const user = await query.from('users').where('first_name', field).first()
             return !user
         }),
-        last_name : vine.string().minLength(6).maxLength(32)
-            .unique(async (query, field) => {
+        last_name : vine
+        .string()
+        .minLength(6)
+        .maxLength(32)
+        .unique(async (query, field) => {
             const user = await query.from('users').where('last_name', field).first()
             return !user
         }),
-        role : vine.enum(
+        role : vine
+        .enum(
             ['veterinarian', 'client']
         )
         
