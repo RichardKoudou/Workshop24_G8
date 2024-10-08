@@ -8,19 +8,25 @@
 */
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
-import UsersController from "#controllers/users_controller";
-import AnimalController from '#controllers/animals_controller';
 
+import AnimalController from '#controllers/animals_controller';
+const UsersController = () => import('#controllers/users_controller')
 router.get('OPoil/v1/Home', async () => {}).use(middleware.auth({
   guards: ['api']}));
 
 const AuthController = () => import('#controllers/auth_controller')
 
-router.group(() => {
-  router.post('register', [AuthController, 'register'])
-  router.post('login/:id', [AuthController, 'login'])
-  router.delete('logout/:id', [AuthController, 'logout']).use(middleware.auth())
-}).prefix('OPoil/v1/auth')
+router.get('/', async ({ view }) => {
+  return view.render('home')
+})
+
+router
+  .group(() => {
+    router.post('register', [AuthController, 'register'])
+    router.post('login/:id', [AuthController, 'login'])
+    router.post('logout/:id', [AuthController, 'logout']).use(middleware.auth())
+  })
+  .prefix('PilePoil/v1/auth')
 
 router.group(() => {
   router.get('allUsers', [UsersController, 'show'])

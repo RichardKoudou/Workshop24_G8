@@ -31,7 +31,9 @@ export default defineConfig({
     () => import('@adonisjs/core/providers/vinejs_provider'),
     () => import('@adonisjs/cors/cors_provider'),
     () => import('@adonisjs/lucid/database_provider'),
-    () => import('@adonisjs/auth/auth_provider')
+    () => import('@adonisjs/auth/auth_provider'),
+    () => import('@adonisjs/core/providers/edge_provider'),
+    () => import('@adonisjs/vite/vite_provider')
   ],
 
   /*
@@ -68,4 +70,17 @@ export default defineConfig({
     ],
     forceExit: false,
   },
+  metaFiles: [{
+    pattern: 'resources/views/**/*.edge',
+    reloadServer: false,
+  },
+  {
+    pattern: 'public/**',
+    reloadServer: false,
+  }
+  ],
+  hooks: {
+    onBuildStarting: [() => import('@adonisjs/vite/build_hook')]
+  },
+    assetsBundler: false
 })
