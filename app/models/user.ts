@@ -4,6 +4,8 @@ import { compose } from '@adonisjs/core/helpers'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
+import { VineEnum } from '@vinejs/vine'
+//import { EnumDeclaration, isEnumDeclaration } from 'typescript'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -15,7 +17,19 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare id: number
 
   @column()
-  declare fullName: string | null
+  declare first_name: string 
+
+  @column()
+  declare last_name: string 
+
+  @column()
+  declare role: string 
+
+  @column()
+  declare city: string
+
+  @column()
+  declare address: string
 
   @column()
   declare email: string
