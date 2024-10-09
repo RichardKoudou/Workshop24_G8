@@ -23,11 +23,7 @@ export default class AnimalController {
         const uploadAnimal = await request.validateUsing(AnimalValidator)
 
         const newAnimal = await Animal.create({
-            name: uploadAnimal.name,
             species: uploadAnimal.species,
-            symptoms: uploadAnimal.symptoms,
-            status: uploadAnimal.status
-
             
           })
         return response.created(newAnimal)

@@ -4,7 +4,7 @@ import { compose } from '@adonisjs/core/helpers'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
-import { VineEnum } from '@vinejs/vine'
+//import { VineEnum } from '@vinejs/vine'
 //import { EnumDeclaration, isEnumDeclaration } from 'typescript'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
