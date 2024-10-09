@@ -77,7 +77,7 @@ router
     router.put('update/:id', [AdviceController, 'update'])
   })
   .prefix('OPoil/v1/advices')
-//.use(middleware.auth())
+  .use(middleware.auth())
 
 /**
  * Post routes
@@ -93,4 +93,4 @@ router
     router.delete('delete/:id', [PostsController, 'destroy'])
   })
   .prefix('OPoil/v1/posts')
-// .use(middleware.auth())
+  .use(middleware.auth())

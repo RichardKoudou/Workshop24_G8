@@ -8,6 +8,10 @@ export default class AdviceController {
     const uploadAdvice = await request.validateUsing(AdviceValidator)
     const veto: User = await User.findOrFail(uploadAdvice.doctorId)
 
+    if (veto.role !== 'ROLE_VETO') {
+      return response.badRequest({ message: 'Seul les vétérinaires peuvent donner un avis' })
+    }
+
     const newAdvice = await Advice.create({
       comment: uploadAdvice.comment,
       doctorId: veto.id,
