@@ -1,6 +1,6 @@
 import { HttpContext } from '@adonisjs/core/http'
 import Post from '#models/post'
-import { postValidator } from '#validators/post'
+import { postValidator, updateValidator } from '#validators/post'
 
 export default class PostsController {
   async store({ request, response }: HttpContext) {
@@ -22,11 +22,22 @@ export default class PostsController {
   }
 
   async update({ request, params, response }: HttpContext) {
-    const payload = await request.validateUsing(postValidator)
+    const payload = await request.validateUsing(updateValidator)
     const post = await Post.findOrFail(params.id)
 
-    post.title = payload.title
-    post.description = payload.description
+    if (payload.advice_id) {
+      post.advice_id = payload.advice_id
+    }
+    if (payload.title) {
+      post.title = payload.title
+    }
+    if (payload.description) {
+      post.description = payload.description
+    }
+    if (payload.user_id) {
+      post.user_id = payload.user_id
+    }
+
     await post.save()
 
     return response.ok(post)
@@ -37,5 +48,10 @@ export default class PostsController {
     await post.delete()
 
     return response.noContent()
+  }
+
+  async indexPostsNoAdvice({ response }: HttpContext) {
+    const posts = await Post.query().whereNull('advice_id')
+    return response.ok(posts)
   }
 }
