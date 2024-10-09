@@ -6,7 +6,7 @@ import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import Post from '#models/post'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
-
+import Animal from '#models/animal'
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
   passwordColumnName: 'password',
@@ -36,6 +36,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @hasMany(() => Post)
   declare posts: HasMany<typeof Post>
+
+  @hasMany(() => Animal)
+  declare animals: HasMany<typeof Animal>
 
   @column({ serializeAs: null })
   declare password: string
