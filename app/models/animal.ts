@@ -11,12 +11,6 @@ export default class Animal extends BaseModel {
   @column()
   declare species: string
 
-  @column()
-  declare symptoms: string
-
-  @column()
-  declare status: string
-
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
