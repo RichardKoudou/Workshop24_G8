@@ -6,9 +6,6 @@ export default class Animal extends BaseModel {
   declare id: number
 
   @column()
-  declare name: string
-
-  @column()
   declare species: string
 
   @column.dateTime({ autoCreate: true })

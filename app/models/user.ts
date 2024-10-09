@@ -6,7 +6,6 @@ import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import Post from '#models/post'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
-//import { EnumDeclaration, isEnumDeclaration } from 'typescript'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
