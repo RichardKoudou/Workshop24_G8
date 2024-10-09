@@ -1,6 +1,5 @@
 import vine from '@vinejs/vine'
 
-
 /**
  * Validates the Animal's creation action
  */
@@ -9,5 +8,3 @@ export const AnimalValidator = vine.compile(
     species: vine.string().trim().minLength(3),
   })
 )
-
-

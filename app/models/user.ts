@@ -1,31 +1,29 @@
 import { DateTime } from 'luxon'
 import hash from '@adonisjs/core/services/hash'
 import { compose } from '@adonisjs/core/helpers'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
 import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
-//import { VineEnum } from '@vinejs/vine'
-//import { EnumDeclaration, isEnumDeclaration } from 'typescript'
+import Post from '#models/post'
+import type { HasMany } from '@adonisjs/lucid/types/relations'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
   passwordColumnName: 'password',
 })
 
-
-
 export default class User extends compose(BaseModel, AuthFinder) {
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare first_name: string 
+  declare first_name: string
 
   @column()
-  declare last_name: string 
+  declare last_name: string
 
   @column()
-  declare role: string 
+  declare role: string
 
   @column()
   declare city: string
@@ -35,6 +33,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @column()
   declare email: string
+
+  @hasMany(() => Post)
+  declare posts: HasMany<typeof Post>
 
   @column({ serializeAs: null })
   declare password: string
