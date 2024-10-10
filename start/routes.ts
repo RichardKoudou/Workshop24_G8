@@ -28,7 +28,8 @@ const AuthController = () => import('#controllers/auth_controller')
 router
   .group(() => {
     router.post('register', [AuthController, 'register'])
-    router.post('login/:id', [AuthController, 'login'])
+    router.post('profile', [AuthController, 'profile']).use(middleware.auth())
+    router.post('login', [AuthController, 'login'])
     router.delete('logout/:id', [AuthController, 'logout']).use(middleware.auth())
   })
   .prefix('OPoil/v1/auth')
@@ -87,6 +88,8 @@ const PostsController = () => import('#controllers/posts_controller')
 router
   .group(() => {
     router.get('allPosts', [PostsController, 'index'])
+    router.get('allPostsNoAdvice', [PostsController, 'indexPostsNoAdvice'])
+    router.post('allPostsByVeto', [PostsController, 'indexPostsByVeto'])
     router.get('posts/:id', [PostsController, 'show'])
     router.post('upload', [PostsController, 'store'])
     router.put('update/:id', [PostsController, 'update'])
