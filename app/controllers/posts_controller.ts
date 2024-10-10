@@ -71,4 +71,15 @@ export default class PostsController {
 
     return response.ok(posts)
   }
+
+  async indexPostsByUser({ request, response }: HttpContext) {
+    const payload = await request.validateUsing(updateValidator)
+
+    const posts = await Post.findManyBy('user_id', payload.user_id!)
+    for (const post of posts) {
+      post.advice = (await Advice.findBy('id', post.advice_id)) ?? null
+    }
+
+    return response.ok(posts)
+  }
 }
