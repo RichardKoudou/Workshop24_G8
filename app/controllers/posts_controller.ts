@@ -1,7 +1,7 @@
 import { HttpContext } from '@adonisjs/core/http'
 import Post from '#models/post'
 import { postValidator, updateValidator } from '#validators/post'
-import Advice from "#models/advice";
+import Advice from '#models/advice'
 
 export default class PostsController {
   async store({ request, response }: HttpContext) {

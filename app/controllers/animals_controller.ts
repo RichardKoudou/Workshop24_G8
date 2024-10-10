@@ -9,6 +9,7 @@ export default class AnimalController {
 
     const newAnimal = await Animal.create({
       species: uploadAnimal.species,
+      user_id: uploadAnimal.user_id,
     })
     return response.created(newAnimal)
   }
@@ -37,5 +38,9 @@ export default class AnimalController {
     return response.json(animal)
   }
 
-  
+  async allAnimalsByUser({ request, response }: HttpContext) {
+    const userId = request.body().user_id
+    const animals = await Animal.query().where('user_id', userId)
+    return response.json(animals)
+  }
 }

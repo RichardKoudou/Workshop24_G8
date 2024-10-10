@@ -59,6 +59,7 @@ router
     router.get('allAnimals', [AnimalController, 'index'])
     router.get('animals/:id', [AnimalController, 'show'])
     router.post('uploadAnimals', [AnimalController, 'store'])
+    router.post('allAnimalsByUser', [AnimalController, 'allAnimalsByUser'])
     /**
      * @summary Create a new animal
      * @description This endpoint creates a new animal with the specified species.

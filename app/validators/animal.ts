@@ -6,5 +6,6 @@ import vine from '@vinejs/vine'
 export const AnimalValidator = vine.compile(
   vine.object({
     species: vine.string().trim().minLength(3),
+    user_id: vine.number().positive(),
   })
 )
