@@ -11,6 +11,20 @@ import { middleware } from './kernel.js'
 const UsersController = () => import('#controllers/users_controller')
 const AnimalController = () => import('#controllers/animals_controller')
 
+import AutoSwagger from "adonis-autoswagger";
+import swagger from "#config/swagger";
+// returns swagger in YAML
+router.get("/swagger", async () => {
+  return AutoSwagger.default.docs(router.toJSON(), swagger);
+});
+
+// Renders Swagger-UI and passes YAML-output of /swagger
+router.get("/docs", async () => {
+  return AutoSwagger.default.ui("/swagger", swagger);
+  // return AutoSwagger.default.scalar("/swagger"); to use Scalar instead
+  // return AutoSwagger.default.rapidoc("/swagger", "view"); to use RapiDoc instead (pass "view" default, or "read" to change the render-style)
+});
+
 router
   .get('OPoil/v1/Home', async () => {})
   .use(
@@ -45,6 +59,14 @@ router
     router.get('allAnimals', [AnimalController, 'index'])
     router.get('animals/:id', [AnimalController, 'show'])
     router.post('uploadAnimals', [AnimalController, 'store'])
+    /**
+     * @summary Create a new animal
+     * @description This endpoint creates a new animal with the specified species.
+     * @requestBody {Object} animal - The animal object to be created
+     * @requestBody.species {string} - The species of the animal
+     * @response 201 {Animal} - Returns the created animal object
+     * @response 400 {Object} - Returns an error message if validation fails
+     */
     router.delete('deleteAnimal/:id', [AnimalController, 'destroy'])
   })
   .prefix('OPoil/v1/animals')
