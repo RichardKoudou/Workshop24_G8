@@ -89,6 +89,7 @@ router
   .group(() => {
     router.get('allPosts', [PostsController, 'index'])
     router.get('allPostsNoAdvice', [PostsController, 'indexPostsNoAdvice'])
+    router.post('allPostsByVeto', [PostsController, 'indexPostsByVeto'])
     router.get('posts/:id', [PostsController, 'show'])
     router.post('upload', [PostsController, 'store'])
     router.put('update/:id', [PostsController, 'update'])

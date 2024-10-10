@@ -1,6 +1,7 @@
 import { HttpContext } from '@adonisjs/core/http'
 import Post from '#models/post'
 import { postValidator, updateValidator } from '#validators/post'
+import Advice from "#models/advice";
 
 export default class PostsController {
   async store({ request, response }: HttpContext) {
@@ -52,6 +53,22 @@ export default class PostsController {
 
   async indexPostsNoAdvice({ response }: HttpContext) {
     const posts = await Post.query().whereNull('advice_id')
+    return response.ok(posts)
+  }
+
+  async indexPostsByVeto({ request, response }: HttpContext) {
+    const payload = await request.validateUsing(updateValidator)
+
+    const vetoAdvices = await Advice.findManyBy('doctorId', payload.user_id)
+
+    const posts = await Post.query().whereIn(
+      'advice_id',
+      vetoAdvices.map((advice) => advice.id)
+    )
+    posts.forEach((post) => {
+      ;(post as any).advice = vetoAdvices.find((advice) => advice.id === post.advice_id) ?? null
+    })
+
     return response.ok(posts)
   }
 }
