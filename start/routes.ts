@@ -8,6 +8,7 @@
 */
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+import ChatbotsController from '#controllers/chatbots_controller';
 const UsersController = () => import('#controllers/users_controller')
 const AnimalController = () => import('#controllers/animals_controller')
 
@@ -121,3 +122,6 @@ router
   })
   .prefix('OPoil/v1/posts')
   .use(middleware.auth())
+
+  router.post('/OPoil/v1/chatbot/ask', [ChatbotsController, 'ask'])
+
